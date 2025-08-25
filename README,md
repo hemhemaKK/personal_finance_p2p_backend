@@ -1,78 +1,84 @@
-# 🚀 Resource Management System – Backend
+# 💰 Personal Finance & Peer-to-Peer Payment System
 
-## 📖 Overview
-This is the **backend server** for the Resource Management System.  
-It provides user authentication (Admin & User), resource management APIs, and role-based access control.
-
----
-
-🔗 Live Links
-
-Backend Deployment: https://masai-repo.onrender.com
-
-## ✨ Features
-- User Authentication (Login, JWT-based)
-- Role-based Access (Admin/User)
-- CRUD APIs for Resources
-- Secure Password Handling
-- Deployed with Render
+![Project Status](https://img.shields.io/badge/status-completed-brightgreen)
+![Node.js](https://img.shields.io/badge/Node.js-v22.17.0-brightgreen)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-blue)
 
 ---
 
-## 🛠 Tech Stack
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB (Mongoose ODM)
-- **Authentication:** JWT + bcrypt
-- **Deployment:** Render
+## 🚀 Overview
+
+Manage your personal finances efficiently and perform **secure peer-to-peer (P2P) money transfers**.  
+Track expenses, set budgets, achieve financial goals, and transfer money safely—all in one system!  
 
 ---
 
-## 📂 Folder Structure
-backend/
-│── src/
-│ ├── controllers/ # Request handlers
-│ ├── models/ # Mongoose schemas
-│ ├── routes/ # Express routes
-│ ├── middleware/ # Auth middlewares
-│ └── server.js # Entry point
-│
-├── .env.example # Example environment variables
-├── package.json
-└── README.md
+## ✨ Features Implemented
 
-yaml
-Copy code
+### 💵 Expense & Income Tracking
+- ✅ Create, update, and delete expenses or income  
+- ✅ Add custom categories for detailed tracking (e.g., groceries, salary)  
+- ✅ Filter transactions by date, category, or amount  
+
+### 📊 Budget Management
+- ✅ Set monthly or yearly budgets  
+- ✅ Track spending in real-time against budgets  
+- ✅ Receive notifications when nearing or exceeding limits  
+
+### 🎯 Financial Goals
+- ✅ Set and manage personal financial goals  
+- ✅ Track progress toward goals with real-time updates  
+
+### 💸 Peer-to-Peer (P2P) Transfers
+- ✅ Secure money transfers to other users  
+- ✅ Request payments from users  
+- ✅ View transaction history (completed & pending)  
+
+### 📈 Transaction History & Reports
+- ✅ Full history of income, expenses, and transfers  
+- ✅ Generate monthly/yearly summaries  
+- ✅ Filter reports by type, date, or category  
+
+### 🔔 Notifications & Alerts
+- ✅ Notify users of successful payments, failed transfers, or budget alerts  
 
 ---
 
-## ⚙️ Setup Instructions
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/your-username/resource-management-backend.git
-   cd backend
-Install dependencies:
+## 🛠️ Tech Stack
 
-bash
-Copy code
+- **Backend:** Node.js, Express.js  
+- **Database:** MongoDB (Mongoose)  
+- **Authentication:** JWT (JSON Web Tokens)  
+- **Security:** Role-Based Access Control (RBAC), Data Encryption  
+- **Notifications:** Email via SMTP  
+
+---
+
+## ⚡ Getting Started
+
+### Prerequisites
+- Node.js >= 18  
+- MongoDB (local or Atlas)  
+- npm or yarn  
+
+### Installation
+```bash
+# Clone repository
+git clone https://github.com/your-username/finance_management_p2p.git
+cd finance_management_p2p
+
+# Install dependencies
 npm install
-Add environment variables in .env:
 
-env
-Copy code
+# Create a .env file with required secrets
 PORT=5000
-MONGO_URI=your_mongo_connection_string
-JWT_SECRET=your_secret_key
-Start the server:
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+EMAIL_FROM=your_email
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email
+SMTP_PASS=your_password
 
-bash
-Copy code
+# Start server
 npm run dev
-📌 API Documentation
-Endpoint	Method	Access	Description
-/api/auth/login	POST	Public	Login user and return JWT token
-/api/resources	GET	User	Get all resources
-/api/resources	POST	Admin	Add new resource
-/api/resources/:id	PUT	Admin	Update a resource
-/api/resources/:id	DELETE	Admin	Delete a resource
-
-
