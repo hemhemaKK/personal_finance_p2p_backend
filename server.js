@@ -28,6 +28,10 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/payment", paymentRoutes); 
 app.use("/api/budget", budgetRoutes);
 // Connect to MongoDB and start server
+app.get("/", (req, res) => {
+  res.send("✅ Personal Finance P2P Backend is running!");
+});
+
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
