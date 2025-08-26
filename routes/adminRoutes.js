@@ -1,9 +1,18 @@
-const express = require("express");
+import express from "express";
+import { requireAuth } from "../middleware/authMiddleware.js";
+import {
+  getAllUsers,
+  getAllTransactions,
+  getAllTickets,
+  getAllContacts,
+} from "../controllers/adminController.js";
+
 const router = express.Router();
-const { requireAuth } = require("../middleware/authMiddleware");
-const { getAllUsers } = require("../controllers/adminController");
 
-// Admin route to get all users
-router.get("/", requireAuth, getAllUsers);
+// Admin routes
+router.get("/users", requireAuth, getAllUsers);
+router.get("/transactions", requireAuth, getAllTransactions);
+router.get("/tickets", requireAuth, getAllTickets);
+router.get("/contacts", requireAuth, getAllContacts);
 
-module.exports = router;
+export default router;
