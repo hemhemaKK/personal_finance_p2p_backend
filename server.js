@@ -15,7 +15,7 @@ const paymentRoutes = require("./routes/paymentRoutes");
 const budgetRoutes = require("./routes/budgetRoutes");
 const ticketRoutes = require("./routes/ticketRoutes");
 const contactRoutes = require("./routes/contactRoutes");
-
+const adminRoutes = require("./routes/adminRoutes"); // ✅ new route for admin to get all users
 
 const app = express();
 
@@ -32,13 +32,14 @@ app.use("/api/payment", paymentRoutes);
 app.use("/api/budget", budgetRoutes);
 app.use("/api/tickets", ticketRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/admin", adminRoutes); // ✅ admin users route
 
-
-// Connect to MongoDB and start server
+// Root route
 app.get("/", (req, res) => {
   res.send("✅ Personal Finance P2P Backend is running!");
 });
 
+// MongoDB connection and server start
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
