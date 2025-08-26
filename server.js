@@ -13,6 +13,9 @@ const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const paymentRoutes = require("./routes/paymentRoutes"); 
 const budgetRoutes = require("./routes/budgetRoutes");
+const ticketRoutes = require("./routes/ticketRoutes");
+const contactRoutes = require("./routes/contactRoutes");
+
 
 const app = express();
 
@@ -27,6 +30,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/payment", paymentRoutes); 
 app.use("/api/budget", budgetRoutes);
+app.use("/api/tickets", ticketRoutes);
+app.use("/api/contact", contactRoutes);
+
+
 // Connect to MongoDB and start server
 app.get("/", (req, res) => {
   res.send("✅ Personal Finance P2P Backend is running!");
