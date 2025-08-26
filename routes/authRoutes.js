@@ -25,11 +25,11 @@ router.get(
 );
 
 // ====== REVIEWS ======
-router.post("/reviews", authController.addReview);             // Create review
-router.delete("/reviews/:userId/:reviewId", authController.deleteReview); // Delete review
+router.post("/reviews", AuthController.addReview);             // Create review
+router.delete("/reviews/:userId/:reviewId", AuthController.deleteReview); // Delete review
 
 // ====== SUPPORT TICKETS ======
-router.post("/tickets", authController.createTicket);             // Create ticket
-router.delete("/tickets/:userId/:ticketId", authController.deleteTicket); // Delete ticket
+router.post("/tickets", AuthController.createTicket);             // Create ticket
+router.delete("/tickets/:userId/:ticketId", AuthController.deleteTicket); // Delete ticket
 
 module.exports = router;
