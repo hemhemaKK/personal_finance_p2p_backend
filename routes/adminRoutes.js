@@ -1,11 +1,11 @@
-import express from "express";
-import { requireAuth } from "../middleware/authMiddleware.js";
-import {
+const express = require("express");
+const { requireAuth } = require("../middleware/authMiddleware");
+const {
   getAllUsers,
   getAllTransactions,
   getAllTickets,
   getAllContacts,
-} from "../controllers/adminController.js";
+} = require("../controllers/adminController"); // CommonJS style
 
 const router = express.Router();
 
@@ -15,4 +15,4 @@ router.get("/transactions", requireAuth, getAllTransactions);
 router.get("/tickets", requireAuth, getAllTickets);
 router.get("/contacts", requireAuth, getAllContacts);
 
-export default router;
+module.exports = router;
