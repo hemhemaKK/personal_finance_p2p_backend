@@ -1,7 +1,6 @@
 import User from "../models/User.js";
-import Transaction from "../models/Transaction.js"; // your transaction model
-import Ticket from "../models/User.js"; // tickets are subdocuments in User
-import Contact from "../models/Contact.js"; // your contact model
+import Transaction from "../models/Transaction.js";
+import Contact from "../models/Contact.js";
 
 const ADMIN_EMAIL = "mcaprojecttestemail@gmail.com";
 
@@ -37,10 +36,9 @@ export const getAllTickets = async (req, res) => {
     if (req.user.email !== ADMIN_EMAIL)
       return res.status(403).json({ message: "Access denied: not admin" });
 
-    // Fetch all users and extract their tickets
-    const users = await User.find().select("name email tickets");
+    const users = await User.find().select("name email tickets"); // make sure field is tickets
     const tickets = users.flatMap(user =>
-      user.supportTickets.map(ticket => ({
+      (user.tickets || []).map(ticket => ({
         ...ticket.toObject(),
         userName: user.name,
         userEmail: user.email,
