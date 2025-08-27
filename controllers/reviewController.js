@@ -1,12 +1,8 @@
-// routes/reviewRoutes.js
-const express = require("express");
+// controllers/reviewController.js
 const User = require("../models/User");
-const { requireAuth } = require("../middleware/authMiddleware");
 
-const router = express.Router();
-
-// POST /api/review - create a review
-router.post("/", requireAuth, async (req, res) => {
+// Create a review
+const createReview = async (req, res) => {
   try {
     const { title, comment, rating } = req.body;
 
@@ -23,17 +19,21 @@ router.post("/", requireAuth, async (req, res) => {
 
     user.reviews.push({ title, comment, rating });
     user.hasReviewed = true;
+
     await user.save();
 
-    res.status(201).json({ message: "Review submitted successfully", review: user.reviews[0] });
+    res.status(201).json({
+      message: "Review submitted successfully",
+      review: user.reviews[0],
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
-});
+};
 
-// GET /api/review - get user's reviews (optional)
-router.get("/", requireAuth, async (req, res) => {
+// Get reviews of the logged-in user
+const getReviews = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -43,6 +43,9 @@ router.get("/", requireAuth, async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  createReview,
+  getReviews,
+};
