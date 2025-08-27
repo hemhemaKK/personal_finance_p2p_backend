@@ -32,19 +32,6 @@ const createReview = async (req, res) => {
   }
 };
 
-// Get reviews of the logged-in user
-const getReviews = async (req, res) => {
-  try {
-    const user = await User.findById(req.user._id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    res.status(200).json({ reviews: user.reviews });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
-};
-
 module.exports = {
   createReview,
   getReviews,

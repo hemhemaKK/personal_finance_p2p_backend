@@ -1,11 +1,10 @@
-// routes/reviewRoutes.js
 const express = require("express");
 const User = require("../models/User");
-const { requireAuth } = require("../middleware/authMiddleware");
-
 const router = express.Router();
 
-// POST /api/review - create a review
+// POST /api/review - create a review (keep auth)
+const { requireAuth } = require("../middleware/authMiddleware");
+
 router.post("/", requireAuth, async (req, res) => {
   try {
     const { title, comment, rating } = req.body;
@@ -32,13 +31,12 @@ router.post("/", requireAuth, async (req, res) => {
   }
 });
 
-// GET /api/review - get user's reviews (optional)
-router.get("/", requireAuth, async (req, res) => {
+// GET /api/review - get all users' reviews (no auth)
+router.get("/", async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    res.status(200).json({ reviews: user.reviews });
+    const users = await User.find({}, { reviews: 1, _id: 0 }); // get reviews only
+    const allReviews = users.flatMap(user => user.reviews || []);
+    res.status(200).json({ reviews: allReviews });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
