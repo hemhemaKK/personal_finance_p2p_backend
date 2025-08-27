@@ -39,7 +39,7 @@ export const getAllTickets = async (req, res) => {
     const users = await User.find().select("name email tickets");
 
     const tickets = users.flatMap(user =>
-      (user.tickets || []).map(ticket => ({
+      (user.supportTickets || []).map(ticket => ({
         ...ticket.toObject(),
         user: { name: user.name, email: user.email },  // ✅ send user object
       }))

@@ -1,5 +1,28 @@
 const User = require("../models/User");
 
+
+// Get tickets of a specific user (Admin or self)
+exports.getTickets = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (userId) {
+      // Admin or self access
+      if (req.user.role !== "admin" && req.user._id.toString() !== userId)
+        return res.status(403).json({ message: "Forbidden" });
+
+      const user = await User.findById(userId);
+      return res.json(user.supportTickets);
+    } else {
+      // Current logged-in user
+      const user = await User.findById(req.user._id);
+      res.json(user.supportTickets);
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 // Create a new ticket
 exports.createTicket = async (req, res) => {
   try {
@@ -79,3 +102,5 @@ exports.getTickets = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
