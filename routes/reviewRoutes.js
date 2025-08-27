@@ -34,13 +34,33 @@ router.post("/", requireAuth, async (req, res) => {
 // GET /api/review - get all users' reviews (no auth)
 router.get("/", async (req, res) => {
   try {
-    const users = await User.find({}, { reviews: 1, _id: 0 }); // get reviews only
-    const allReviews = users.flatMap(user => user.reviews || []);
+    const users = await User.find({}, { reviews: 1, name: 1, profilePic: 1 }); // include name & profilePic
+    const allReviews = [];
+
+    users.forEach((user) => {
+      if (user.reviews && user.reviews.length > 0) {
+        user.reviews.forEach((r) => {
+          allReviews.push({
+            name: user.name || "User",
+            userName: user.name || "User",
+            userImage: user.profilePic || "https://i.pravatar.cc/150?img=7",
+            title: r.title,
+            comment: r.comment,
+            rating: r.rating,
+            createdAt: r.createdAt,
+          });
+        });
+      }
+    });
+
     res.status(200).json({ reviews: allReviews });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
+
+module.exports = router;
+
 
 module.exports = router;
