@@ -4,7 +4,6 @@ const ticketController = require("../controllers/ticketController");
 const { requireAuth } = require("../middleware/authMiddleware");
 
 // Routes
-router.get("/", requireAuth, ticketController.getTickets);
 router.post("/create", requireAuth, ticketController.createTicket);
 router.put("/reply/:userId/:ticketId", requireAuth, ticketController.replyTicket);
 router.delete("/:userId/:ticketId", requireAuth, ticketController.deleteTicket);

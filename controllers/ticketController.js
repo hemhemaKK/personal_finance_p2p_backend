@@ -2,26 +2,35 @@ const User = require("../models/User");
 
 
 // Get tickets of a specific user (Admin or self)
+// Get tickets
 exports.getTickets = async (req, res) => {
   try {
-    const { userId } = req.params;
-
-    if (userId) {
-      // Admin or self access
-      if (req.user.role !== "admin" && req.user._id.toString() !== userId)
-        return res.status(403).json({ message: "Forbidden" });
-
-      const user = await User.findById(userId);
-      return res.json(user.supportTickets);
+    if (req.user.email === "mcaprojecttestemail@gmail.com") {
+      // Admin: get all users' tickets
+      const users = await User.find({}, "supportTickets name email"); // optionally include name/email
+      // flatten tickets with user info
+      const allTickets = users.flatMap(u =>
+        u.supportTickets.map(t => ({
+          ...t.toObject(),
+          userName: u.name,
+          userEmail: u.email
+        }))
+      );
+      return res.json(allTickets);
     } else {
-      // Current logged-in user
-      const user = await User.findById(req.user._id);
-      res.json(user.supportTickets);
+      const user = await User.findById(req.user._id).select("supportTickets name email");
+      const tickets = user.supportTickets.map(t => ({
+        ...t.toObject(),
+        userName: user.name,
+        userEmail: user.email
+      }));
+      return res.json(tickets);
     }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 
 // Create a new ticket
 exports.createTicket = async (req, res) => {
@@ -88,19 +97,5 @@ exports.deleteTicket = async (req, res) => {
   }
 };
 
-// Get tickets for a user
-exports.getTickets = async (req, res) => {
-  try {
-    const { userId } = req.params;
-
-    if (req.user.role !== "admin" && req.user._id.toString() !== userId)
-      return res.status(403).json({ message: "Forbidden" });
-
-    const user = await User.findById(userId);
-    res.json(user.supportTickets);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
 
 

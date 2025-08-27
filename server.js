@@ -16,6 +16,7 @@ const budgetRoutes = require("./routes/budgetRoutes");
 const ticketRoutes = require("./routes/ticketRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const adminRoutes = require("./routes/adminRoutes"); // ✅ new route for admin to get all users
+const reviewRoutes = require("./routes/reviewRoutes")
 
 const app = express();
 
@@ -33,6 +34,8 @@ app.use("/api/budget", budgetRoutes);
 app.use("/api/tickets", ticketRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/admin", adminRoutes); // ✅ admin users route
+app.use("/api/review", reviewRoutes);
+
 
 // Root route
 app.get("/", (req, res) => {

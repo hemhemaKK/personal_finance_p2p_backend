@@ -33,7 +33,8 @@ const userSchema = new mongoose.Schema({
   
   // New fields
   reviews: [reviewSchema],        // Array of reviews
-  supportTickets: [ticketSchema]  // Array of tickets with reply
+  supportTickets: [ticketSchema], // Array of tickets with reply
+  hasReviewed: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model("User", userSchema);
