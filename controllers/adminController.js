@@ -36,19 +36,21 @@ export const getAllTickets = async (req, res) => {
     if (req.user.email !== ADMIN_EMAIL)
       return res.status(403).json({ message: "Access denied: not admin" });
 
-    const users = await User.find().select("name email tickets"); // make sure field is tickets
+    const users = await User.find().select("name email tickets");
+
     const tickets = users.flatMap(user =>
       (user.tickets || []).map(ticket => ({
         ...ticket.toObject(),
-        userName: user.name,
-        userEmail: user.email,
+        user: { name: user.name, email: user.email },  // ✅ send user object
       }))
     );
+
     res.json(tickets);
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
 
 // Get all contacts
 export const getAllContacts = async (req, res) => {
